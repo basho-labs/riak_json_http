@@ -1,4 +1,4 @@
-%% @doc To enable Riak Json set this 'on'.
+%% @doc To enable RiakJson http interface set this 'on'.
 %% @datatype enum on, off
 {mapping, "riak_json_http", "riak_json_http.enabled", [
   {default, on},
