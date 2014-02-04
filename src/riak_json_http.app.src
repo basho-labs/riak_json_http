@@ -6,7 +6,8 @@
   {registered, []},
   {applications, [
                   kernel,
-                  stdlib
+                  stdlib,
+                  yokozuna
                  ]},
   {mod, { riak_json_http_app, []}},
   {env, []}
