@@ -73,48 +73,76 @@ malformed_request(ReqData, Context) ->
 
 resource_exists(ReqData, Context) ->
     C1 = ensure_schema(Context),
-    case C1#ctx.schema_content of
+    Result = case C1#ctx.schema_content of
         undefined -> {false, ReqData, C1};
         _ -> {true, ReqData, C1}
-    end.
+    end,
+
+    lager:debug("Result: ~p~n", [Result]),
+
+    Result.
 
 accept_json(ReqData, Context) ->
-    store_schema(ReqData, Context).
+    Result = store_schema(ReqData, Context),
+
+    lager:debug("Result: ~p~n", [Result]),
+
+    Result.
 
 to_json(ReqData, Context) ->
-    {Context#ctx.schema_content, ReqData, Context}.
+    Result = {Context#ctx.schema_content, ReqData, Context},
+
+    lager:debug("Result: ~p~n", [Result]),
+
+    Result.
 
 delete_resource(ReqData, Context) ->
-    delete_schema(ReqData, Context).
+    Result = delete_schema(ReqData, Context),
+
+    lager:debug("Result: ~p~n", [Result]),
+
+    Result.
 
 is_authorized(ReqData, Context) ->
-    case rj_auth_util:authorize(ReqData) of
+    Result = case rj_auth_util:authorize(ReqData) of
         {ok, Username} ->
             rj_auth_util:success(ReqData, Context#ctx{username=Username});
         {failed, _Reason} ->
             rj_auth_util:failure(ReqData, Context);
         {error, _Reason} ->
             rj_auth_util:error(ReqData, Context)
-    end.
+    end,
+
+    lager:debug("Result: ~p~n", [Result]),
+
+    Result.
 
 %%% =================================================== internal functions
 
 ensure_schema(Context) when Context#ctx.schema_name =:= undefined ->
-    case riak_json:get_default_schema(Context#ctx.collection) of
+    Result = case riak_json:get_default_schema(Context#ctx.collection) of
         {error, Reason} -> 
             lager:info("Couldn't find schema, reason: ~p~n", [Reason]),
             Context;
         SchemaContent -> 
             Context#ctx{schema_content = SchemaContent}
-    end;
+    end,
+
+    lager:debug("Result: ~p~n", [Result]),
+
+    Result;
 ensure_schema(Context) ->
-    case riak_json:get_schema(Context#ctx.schema_name) of
+    Result = case riak_json:get_schema(Context#ctx.schema_name) of
         {error, Reason} -> 
             lager:info("Couldn't find schema with name: ~p, reason: ~p~n", [Context#ctx.schema_name, Reason]),
             Context;
         SchemaContent ->
             Context#ctx{schema_content = SchemaContent}
-    end.
+    end,
+
+    lager:debug("Result: ~p~n", [Result]),
+
+    Result.
 
 store_schema(ReqData, Context) ->
     SchemaName = case Context#ctx.schema_name of
@@ -124,7 +152,7 @@ store_schema(ReqData, Context) ->
 
     Response = riak_json:store_schema(SchemaName, wrq:req_body(ReqData)),
 
-    case Response of
+    Result = case Response of
         {error, Reason} -> 
             lager:info("Error storing schema: ~p", [Reason]),
             {error, Reason};
@@ -134,16 +162,24 @@ store_schema(ReqData, Context) ->
         {ok, _} ->
             riak_json:link_schema(Context#ctx.collection, SchemaName),
             {true, ReqData, Context}
-    end.
+    end,
+
+    lager:debug("Result: ~p~n", [Result]),
+
+    Result.
 
 delete_schema(ReqData, Context) ->
     Response = riak_json:delete_default_schema(Context#ctx.collection),
 
-    case Response of
+    Result = case Response of
         {error, Reason} ->
             {error, Reason};
         ok ->
             {true, ReqData, Context}
-    end.
+    end,
+
+    lager:debug("Result: ~p~n", [Result]),
+
+    Result.
 
 
