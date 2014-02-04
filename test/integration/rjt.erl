@@ -3,7 +3,7 @@
 
 -compile(export_all).
 
--include("../../include/riak_json.hrl").
+-include("../../deps/riak_json/include/riak_json.hrl").
 -include_lib("eunit/include/eunit.hrl").
 
 -ifdef(integration_test).

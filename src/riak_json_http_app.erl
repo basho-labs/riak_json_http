@@ -43,7 +43,7 @@ stop(_State) ->
 %% ===================================================================
 
 add_routes() ->
-    [webmachine_router:add_route(R) || R <- dispatch_table()].
+    [webmachine_router:add_route(R) || R <- routes()].
 
 props() ->
     [
