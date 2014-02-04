@@ -31,7 +31,11 @@
 %% ===================================================================
 
 start(_StartType, _StartArgs) ->
-    add_routes(),
+    case rj_http_config:is_enabled() of
+        true -> add_routes();
+        _ -> ok
+    end,
+    
     riak_json_http_sup:start_link().
 
 stop(_State) ->
