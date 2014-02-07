@@ -1,8 +1,8 @@
 %%-*- mode: erlang -*-
 {application, riak_json_http,
  [
-  {description, ""},
-  {vsn, "1"},
+  {description, "RiakJson Http Interface."},
+  {vsn, git},
   {registered, []},
   {applications, [
                   kernel,
