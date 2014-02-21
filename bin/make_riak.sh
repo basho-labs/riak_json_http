@@ -81,11 +81,11 @@ if [ "${mode}" != 'full' ]; then
         cd ${json_path} && make
     fi
     echo "Cleaning ebin.."
-    rm ${riak_path}rel/riak/lib/riak_json_http-1/ebin/*
-    rm ${riak_path}rel/riak/lib/riak_json-1/ebin/*
+    rm ${riak_path}rel/riak/lib/riak_json_http-v0.0.1/ebin/*
+    rm ${riak_path}rel/riak/lib/riak_json-v0.0.1/ebin/*
     echo "Copying new ebin"
-    cp -R ${json_path}ebin/* ${riak_path}rel/riak/lib/riak_json_http-1/ebin/
-    cp -R ${json_path}/deps/riak_json/ebin/* ${riak_path}rel/riak/lib/riak_json-1/ebin/
+    cp -R ${json_path}ebin/* ${riak_path}rel/riak/lib/riak_json_http-v0.0.1/ebin/
+    cp -R ${json_path}/deps/riak_json/ebin/* ${riak_path}rel/riak/lib/riak_json-v0.0.1/ebin/
     echo "Fixing riak.conf"
     cp ${riak_path}rel/riak/etc/riak.conf ${riak_path}rel/riak/etc/riak.conf.bak
     sed 's/search = off/search = on/g' ${riak_path}rel/riak/etc/riak.conf.bak > ${riak_path}rel/riak/etc/riak.conf

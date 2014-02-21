@@ -2,7 +2,7 @@
 {application, riak_json_http,
  [
   {description, "RiakJson Http Interface."},
-  {vsn, git},
+  {vsn, "v0.0.2"},
   {registered, []},
   {applications, [
                   kernel,

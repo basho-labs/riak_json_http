@@ -57,6 +57,7 @@ props() ->
 
 routes() ->
     [
+        {[rj_http_config:document_name(),"collection"], rj_wm_collection, props()},
         {[rj_http_config:document_name(),"collection", collection], rj_wm_document, props()},
         {[rj_http_config:document_name(),"collection", collection, key], rj_wm_document, props()},
         {[rj_http_config:document_name(),"collection", collection, "query", '*'], rj_wm_query, props()},
