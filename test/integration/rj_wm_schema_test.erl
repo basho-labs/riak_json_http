@@ -44,6 +44,7 @@ valid_schema() ->
     <<"[{\"name\": \"user_name\", \"type\": \"string\"},
         {\"name\": \"full_name\", \"type\": \"text\"},
         {\"name\": \"categories\", \"type\": \"multi_string\"},
+        {\"name\": \"coordinates\", \"type\": \"location\"},
         {\"name\": \"age\", \"type\": \"number\"}]">>.
 
 -endif.
