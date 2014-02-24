@@ -81,17 +81,15 @@ if [ "${mode}" != 'full' ]; then
         cd ${json_path} && make
     fi
     echo "Cleaning ebin.."
-    rm ${riak_path}rel/riak/lib/riak_json_http-v0.0.1/ebin/*
-    rm ${riak_path}rel/riak/lib/riak_json-v0.0.1/ebin/*
+    rj_version='v0.0.2'
+    rm ${riak_path}rel/riak/lib/riak_json_http-${rj_version}/ebin/*
+    rm ${riak_path}rel/riak/lib/riak_json-${rj_version}/ebin/*
     echo "Copying new ebin"
-    cp -R ${json_path}ebin/* ${riak_path}rel/riak/lib/riak_json_http-v0.0.1/ebin/
-    cp -R ${json_path}/deps/riak_json/ebin/* ${riak_path}rel/riak/lib/riak_json-v0.0.1/ebin/
+    cp -R ${json_path}ebin/* ${riak_path}rel/riak/lib/riak_json_http-${rj_version}/ebin/
+    cp -R ${json_path}/deps/riak_json/ebin/* ${riak_path}rel/riak/lib/riak_json-${rj_version}/ebin/
     echo "Fixing riak.conf"
     cp ${riak_path}rel/riak/etc/riak.conf ${riak_path}rel/riak/etc/riak.conf.bak
     sed 's/search = off/search = on/g' ${riak_path}rel/riak/etc/riak.conf.bak > ${riak_path}rel/riak/etc/riak.conf
-    if [ $(grep "buckets.default.siblings" ${riak_path}/rel/riak/etc/riak.conf | wc -l) -eq 0 ];
-        then echo "buckets.default.siblings = off" >> ${riak_path}rel/riak/etc/riak.conf;
-    fi
     echo "Stopping Riak"
     bash ${riak_path}rel/riak/bin/riak stop
     ulimit -n 4096
