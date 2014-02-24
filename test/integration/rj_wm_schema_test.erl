@@ -45,6 +45,7 @@ valid_schema() ->
         {\"name\": \"full_name\", \"type\": \"text\"},
         {\"name\": \"categories\", \"type\": \"multi_string\"},
         {\"name\": \"coordinates\", \"type\": \"location\"},
+        {\"name\": \"coordinates_rpt\", \"type\": \"location_rpt\"},
         {\"name\": \"age\", \"type\": \"number\"}]">>.
 
 -endif.
