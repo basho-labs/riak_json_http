@@ -81,7 +81,7 @@ if [ "${mode}" != 'full' ]; then
         cd ${json_path} && make
     fi
     echo "Cleaning ebin.."
-    rj_version='v0.0.2'
+    rj_version='v0.0.3'
     rm ${riak_path}rel/riak/lib/riak_json_http-${rj_version}/ebin/*
     rm ${riak_path}rel/riak/lib/riak_json-${rj_version}/ebin/*
     echo "Copying new ebin"
